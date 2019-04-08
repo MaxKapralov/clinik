@@ -1,5 +1,7 @@
 package com.strotska.prychodnia.model;
 
+import com.strotska.prychodnia.security.Role;
+
 import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -18,12 +20,12 @@ public class Identity extends BaseEntity {
 
     @NotNull
     @ElementCollection(fetch = FetchType.EAGER)
-    private Set<String> roles;
+    private Set<Role> roles;
 
     public Identity() {
     }
 
-    public Identity(@NotEmpty String username, @NotEmpty String password, @NotNull Set<String> roles) {
+    public Identity(@NotEmpty String username, @NotEmpty String password, @NotNull Set<Role> roles) {
         this.username = username;
         this.password = password;
         this.roles = roles;
@@ -37,7 +39,7 @@ public class Identity extends BaseEntity {
         return password;
     }
 
-    public Set<String> getRoles() {
+    public Set<Role> getRoles() {
         return roles;
     }
 }

@@ -10,6 +10,8 @@ import org.springframework.stereotype.Service;
 
 import java.util.HashSet;
 import java.util.Set;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 @Service
 public class UserDetailsServiceImpl implements UserDetailsService {
@@ -21,7 +23,8 @@ public class UserDetailsServiceImpl implements UserDetailsService {
 
     @Override
     public UserDetails loadUserByUsername(String username) {
-        return identityRepository.findByUsername(username).map(user -> new User(user.getUsername(), user.getPassword(), getAuthority(user.getRoles())))
+        return identityRepository.findByUsername(username)
+                .map(user -> new User(user.getUsername(), user.getPassword(), getAuthority(Stream.of(user.getRoles()).map(role ->role.toString()).collect(Collectors.toSet()))))
                 .orElseThrow(() -> new UsernameNotFoundException(username));
     }
 
