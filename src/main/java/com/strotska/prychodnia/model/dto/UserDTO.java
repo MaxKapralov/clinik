@@ -1,16 +1,31 @@
 package com.strotska.prychodnia.model.dto;
 
+import javax.validation.constraints.Email;
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.Pattern;
+
 public class UserDTO {
+    @NotEmpty
     private String name;
+    @NotEmpty
     private String surname;
+    @Email
     private String email;
+    @Pattern(regexp = "^\\d{9}$")
     private String phoneNumber;
+    @NotEmpty
     private String flatNumber;
+    @NotEmpty
     private String streetNumber;
+    @NotEmpty
     private String street;
+    @NotEmpty
     private String city;
+    @NotEmpty
     private String zipCode;
+    @Pattern(regexp = "^[0-9]{11}$")
     private String pesel;
+    @Pattern(regexp = "(?=^.{8,}$)((?=.*\\d)|(?=.*\\W+))(?![.\\n])(?=.*[A-Z])(?=.*[a-z]).*$")
     private String password;
 
     public UserDTO() {

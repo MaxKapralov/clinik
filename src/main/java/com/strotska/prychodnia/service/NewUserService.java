@@ -26,8 +26,10 @@ public class NewUserService {
     }
 
     public Optional<UserDetails> saveNewUser(UserDTO userDTO) {
-        Identity identity = identityRepository.save(convertDTOToIdentity(userDTO));
-        return Optional.of(userDetailsRepository.save(convertDTOToUserDetails(userDTO, identity)));
+        return userDetailsRepository.findByPesel(userDTO.getPesel()).map(userDetails -> Optional.<UserDetails>empty()).orElseGet(() -> {
+            Identity identity = identityRepository.save(convertDTOToIdentity(userDTO));
+            return Optional.of(userDetailsRepository.save(convertDTOToUserDetails(userDTO, identity)));
+        });
     }
 
     private Identity convertDTOToIdentity(UserDTO userDTO) {

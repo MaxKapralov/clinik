@@ -9,6 +9,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import javax.validation.Valid;
+
 @RestController
 @RequestMapping("/sign-up")
 public class NewUserController {
@@ -20,8 +22,8 @@ public class NewUserController {
     }
 
     @PostMapping
-    public ResponseEntity<Void> registerUser(@RequestBody UserDTO user) {
-        return newUserService.saveNewUser(user).map(userDetails -> new ResponseEntity<Void>(HttpStatus.CREATED))
-                .orElse(new ResponseEntity<>(HttpStatus.BAD_REQUEST));
+    public ResponseEntity<String> registerUser(@Valid @RequestBody UserDTO user) {
+        return newUserService.saveNewUser(user).map(userDetails -> new ResponseEntity<>("Created", HttpStatus.CREATED))
+                .orElse(new ResponseEntity<>("User with pesel: " + user.getPesel() + " already exists", HttpStatus.BAD_REQUEST));
     }
 }

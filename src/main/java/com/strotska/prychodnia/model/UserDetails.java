@@ -1,5 +1,6 @@
 package com.strotska.prychodnia.model;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToOne;
@@ -15,6 +16,7 @@ public class UserDetails extends BaseEntity {
     private String street;
     private String city;
     private String zipCode;
+    @Column(unique = true)
     private String pesel;
     @OneToOne
     @JoinColumn(name = "identity_id", referencedColumnName = "id")
