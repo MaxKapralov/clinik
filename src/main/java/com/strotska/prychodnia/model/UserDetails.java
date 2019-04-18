@@ -1,9 +1,8 @@
 package com.strotska.prychodnia.model;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.JoinColumn;
-import javax.persistence.OneToOne;
+import javax.persistence.*;
+import java.util.HashSet;
+import java.util.Set;
 
 @Entity
 public class UserDetails extends BaseEntity {
@@ -21,6 +20,9 @@ public class UserDetails extends BaseEntity {
     @OneToOne
     @JoinColumn(name = "identity_id", referencedColumnName = "id")
     private Identity identity;
+
+    @OneToMany(mappedBy = "userDetails", cascade = CascadeType.ALL)
+    private Set<Appointment> appointments = new HashSet<>();
 
     public UserDetails() {
     }
