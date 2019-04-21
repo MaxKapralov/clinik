@@ -37,7 +37,7 @@ public class NewUserService {
     }
     private UserDetails convertDTOToUserDetails(UserDTO userDTO, Identity identity) {
         return new UserDetails(userDTO.getName(), userDTO.getSurname(), userDTO.getEmail(),
-                userDTO.getPhoneNumber(), userDTO.getFlatNumber(), userDTO.getStreetNumber(),
+                userDTO.getPhoneNumber(), userDTO.getFlatNumber(),
                 userDTO.getStreet(), userDTO.getCity(), userDTO.getZipCode(), userDTO.getPesel(), identity);
     }
 }

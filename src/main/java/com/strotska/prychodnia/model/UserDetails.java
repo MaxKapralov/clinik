@@ -11,7 +11,6 @@ public class UserDetails extends BaseEntity {
     private String email;
     private String phoneNumber;
     private String flatNumber;
-    private String streetNumber;
     private String street;
     private String city;
     private String zipCode;
@@ -27,13 +26,12 @@ public class UserDetails extends BaseEntity {
     public UserDetails() {
     }
 
-    public UserDetails(String name, String surname, String email, String phoneNumber, String flatNumber, String streetNumber, String street, String city, String zipCode, String pesel, Identity identity) {
+    public UserDetails(String name, String surname, String email, String phoneNumber, String flatNumber, String street, String city, String zipCode, String pesel, Identity identity) {
         this.name = name;
         this.surname = surname;
         this.email = email;
         this.phoneNumber = phoneNumber;
         this.flatNumber = flatNumber;
-        this.streetNumber = streetNumber;
         this.street = street;
         this.city = city;
         this.zipCode = zipCode;
@@ -61,10 +59,6 @@ public class UserDetails extends BaseEntity {
         return flatNumber;
     }
 
-    public String getStreetNumber() {
-        return streetNumber;
-    }
-
     public String getStreet() {
         return street;
     }
@@ -79,5 +73,37 @@ public class UserDetails extends BaseEntity {
 
     public String getPesel() {
         return pesel;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public void setSurname(String surname) {
+        this.surname = surname;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public void setPhoneNumber(String phoneNumber) {
+        this.phoneNumber = phoneNumber;
+    }
+
+    public void setFlatNumber(String flatNumber) {
+        this.flatNumber = flatNumber;
+    }
+
+    public void setStreet(String street) {
+        this.street = street;
+    }
+
+    public void setCity(String city) {
+        this.city = city;
+    }
+
+    public void setZipCode(String zipCode) {
+        this.zipCode = zipCode;
     }
 }

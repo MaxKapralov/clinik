@@ -1,6 +1,7 @@
 package com.strotska.prychodnia.service;
 
 import com.strotska.prychodnia.model.UserDetails;
+import com.strotska.prychodnia.model.dto.UserDetailsDTO;
 import com.strotska.prychodnia.repository.UserDetailsRepository;
 import org.springframework.stereotype.Service;
 
@@ -17,5 +18,18 @@ public class UserService {
 
     public Optional<UserDetails> getUserByUsername(String username) {
         return userDetailsRepository.findByPesel(username);
+    }
+    public Optional<UserDetails> updateUserDetails(UserDetailsDTO userDetails) {
+        return this.userDetailsRepository.findById(userDetails.getId()).map(user -> {
+            user.setName(userDetails.getName());
+            user.setSurname(userDetails.getSurname());
+            user.setPhoneNumber(userDetails.getPhoneNumber());
+            user.setStreet(userDetails.getStreet());
+            user.setFlatNumber(userDetails.getFlatNumber());
+            user.setCity(userDetails.getCity());
+            user.setZipCode(userDetails.getZipCode());
+            user.setEmail(userDetails.getEmail());
+            return this.userDetailsRepository.save(user);
+        });
     }
 }
