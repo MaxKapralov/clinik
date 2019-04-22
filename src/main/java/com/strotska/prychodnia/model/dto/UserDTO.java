@@ -16,8 +16,6 @@ public class UserDTO {
     @NotEmpty
     private String flatNumber;
     @NotEmpty
-    private String streetNumber;
-    @NotEmpty
     private String street;
     @NotEmpty
     private String city;
@@ -31,13 +29,12 @@ public class UserDTO {
     public UserDTO() {
     }
 
-    public UserDTO(String name, String surname, String email, String phoneNumber, String flatNumber, String streetNumber, String street, String city, String zipCode, String pesel, String password) {
+    public UserDTO(String name, String surname, String email, String phoneNumber, String flatNumber, String street, String city, String zipCode, String pesel, String password) {
         this.name = name;
         this.surname = surname;
         this.email = email;
         this.phoneNumber = phoneNumber;
         this.flatNumber = flatNumber;
-        this.streetNumber = streetNumber;
         this.street = street;
         this.city = city;
         this.zipCode = zipCode;
@@ -63,10 +60,6 @@ public class UserDTO {
 
     public String getFlatNumber() {
         return flatNumber;
-    }
-
-    public String getStreetNumber() {
-        return streetNumber;
     }
 
     public String getStreet() {

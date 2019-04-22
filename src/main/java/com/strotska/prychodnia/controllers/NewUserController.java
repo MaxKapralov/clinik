@@ -22,8 +22,8 @@ public class NewUserController {
     }
 
     @PostMapping
-    public ResponseEntity<String> registerUser(@Valid @RequestBody UserDTO user) {
-        return newUserService.saveNewUser(user).map(userDetails -> new ResponseEntity<>("Created", HttpStatus.CREATED))
-                .orElse(new ResponseEntity<>("User with pesel: " + user.getPesel() + " already exists", HttpStatus.BAD_REQUEST));
+    public ResponseEntity<Void> registerUser(@Valid @RequestBody UserDTO user) {
+        return newUserService.saveNewUser(user).map(userDetails -> new ResponseEntity<Void>(HttpStatus.CREATED))
+                .orElse(new ResponseEntity<>(HttpStatus.BAD_REQUEST));
     }
 }
