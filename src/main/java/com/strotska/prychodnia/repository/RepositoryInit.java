@@ -42,6 +42,10 @@ public class RepositoryInit implements CommandLineRunner {
         Identity identity = identityRepository.save(new Identity("test", passwordEncoder.encode("test"), Utils.setOf(Role.ROLE_USER)));
         UserDetails details = new UserDetails("name", "surname", "email", "phoneNumber", "flatNumber", "street", "city", "zipCode", "test", identity);
         userDetailsRepository.save(details);
+
+        Identity identity2 = identityRepository.save(new Identity("admin", passwordEncoder.encode("admin"), Utils.setOf(Role.ROLE_ADMIN)));
+        UserDetails details2 = new UserDetails("Admin", "Admin", "admin@mail.com", "phoneNumber", "flatNumber", "street", "city", "zipCode", "adminpesel", identity2);
+        userDetailsRepository.save(details2);
     }
 
     private void addServicesAndDoctors() {
