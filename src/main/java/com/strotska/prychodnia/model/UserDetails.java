@@ -20,9 +20,6 @@ public class UserDetails extends BaseEntity {
     @JoinColumn(name = "identity_id", referencedColumnName = "id")
     private Identity identity;
 
-    @OneToMany(mappedBy = "userDetails", cascade = CascadeType.ALL)
-    private Set<Appointment> appointments = new HashSet<>();
-
     public UserDetails() {
     }
 

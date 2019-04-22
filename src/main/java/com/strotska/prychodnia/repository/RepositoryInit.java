@@ -11,9 +11,6 @@ import org.springframework.stereotype.Component;
 
 import java.time.Instant;
 import java.time.temporal.ChronoUnit;
-import java.time.temporal.TemporalUnit;
-import java.util.Collections;
-import java.util.Set;
 
 @Order(2)
 @Component
@@ -48,13 +45,16 @@ public class RepositoryInit implements CommandLineRunner {
     }
 
     private void addServicesAndDoctors() {
-        Set<Service> serviceSet = Utils.setOf(serviceRepository.save(new Service("Service 1")),
-                serviceRepository.save(new Service("Service 2")),
-                serviceRepository.save(new Service("Service 3")));
-        Set<Appointment> appointments = Utils.setOf(appointmentRepository.save(new Appointment(Instant.now(), true)), appointmentRepository.save(new Appointment(Instant.now().plus(1, ChronoUnit.DAYS), false)));
-        Doctor doctor = new Doctor("Maks", "Kap", "Smth", serviceSet, appointments);
-        doctorRepository.save(doctor);
-        Doctor doctor1 = new Doctor("Ala", "Kow", "Ssfdssh", serviceSet, Utils.setOf());
-        doctorRepository.save(doctor1);
+        Service s1 = serviceRepository.save(new Service("Service 1"));
+        Service s2 = serviceRepository.save(new Service("Service 2"));
+        Service s3 = serviceRepository.save(new Service("Service 3"));
+        Doctor d1 = doctorRepository.save(new Doctor("First", "Doctor"));
+        Doctor d2 = doctorRepository.save(new Doctor("Second", "Doctor"));
+        Appointment a1 = new Appointment(null, d1, s1, Instant.now(), false);
+        Appointment a2 = new Appointment(null, d2, s3, Instant.now().plus(1, ChronoUnit.HOURS), true);
+        Appointment a3 = new Appointment(userDetailsRepository.findByPesel("test").get(), d1, s2, Instant.now().plus(1, ChronoUnit.DAYS), false);
+        Appointment a4 = new Appointment(null, d2, s1, Instant.now().plus(2, ChronoUnit.HOURS).plus(1, ChronoUnit.DAYS), true);
+        Appointment a5 = new Appointment(null, d1, s1, Instant.now().plus(2, ChronoUnit.HOURS).plus(1, ChronoUnit.DAYS), true);
+        appointmentRepository.saveAll(Utils.setOf(a1, a2, a3, a4, a5));
     }
 }
