@@ -2,9 +2,7 @@ package com.strotska.prychodnia.model;
 
 import com.strotska.prychodnia.security.Role;
 
-import javax.persistence.ElementCollection;
-import javax.persistence.Entity;
-import javax.persistence.FetchType;
+import javax.persistence.*;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 import java.util.Set;
@@ -20,6 +18,7 @@ public class Identity extends BaseEntity {
 
     @NotNull
     @ElementCollection(fetch = FetchType.EAGER)
+    @Enumerated(EnumType.STRING)
     private Set<Role> roles;
 
     public Identity() {

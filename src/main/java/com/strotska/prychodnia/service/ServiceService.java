@@ -22,4 +22,8 @@ public class ServiceService {
     public Optional<Iterable<Service>> getServices(Long id) {
         return this.serviceRepository.search(id);
     }
+
+    public void deleteService(Long id) {
+        this.serviceRepository.deleteById(id);
+    }
 }

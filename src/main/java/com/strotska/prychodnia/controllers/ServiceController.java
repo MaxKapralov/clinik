@@ -4,6 +4,7 @@ import com.strotska.prychodnia.model.Service;
 import com.strotska.prychodnia.service.ServiceService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -22,8 +23,15 @@ public class ServiceController {
     }
 
     @PostMapping
-    public ResponseEntity<String>  addService(@RequestBody Service service) {
-        return serviceService.saveService(service).map(s -> new ResponseEntity<>("Created", HttpStatus.CREATED))
-                .orElse(new ResponseEntity<>("Service with name: " + service.getName() + " already exists", HttpStatus.BAD_REQUEST));
+    public ResponseEntity<Void> addService(@RequestBody Service service) {
+        return serviceService.saveService(service).map(s -> new ResponseEntity<Void>(HttpStatus.CREATED))
+                .orElse(new ResponseEntity<>(HttpStatus.BAD_REQUEST));
+    }
+
+    @DeleteMapping("/{id}")
+    @PreAuthorize("hasRole('ADMIN')")
+    public ResponseEntity<Void> deleteService(@PathVariable("id") Long id) {
+        this.serviceService.deleteService(id);
+        return new ResponseEntity<>(HttpStatus.OK);
     }
 }

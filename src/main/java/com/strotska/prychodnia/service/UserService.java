@@ -5,6 +5,7 @@ import com.strotska.prychodnia.model.dto.UserDetailsDTO;
 import com.strotska.prychodnia.repository.UserDetailsRepository;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -19,6 +20,7 @@ public class UserService {
     public Optional<UserDetails> getUserByUsername(String username) {
         return userDetailsRepository.findByPesel(username);
     }
+
     public Optional<UserDetails> updateUserDetails(UserDetailsDTO userDetails) {
         return this.userDetailsRepository.findById(userDetails.getId()).map(user -> {
             user.setName(userDetails.getName());
@@ -31,5 +33,9 @@ public class UserService {
             user.setEmail(userDetails.getEmail());
             return this.userDetailsRepository.save(user);
         });
+    }
+
+    public List<UserDetails> getAllUsers() {
+        return userDetailsRepository.findAllPatients();
     }
 }

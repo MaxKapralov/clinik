@@ -38,4 +38,9 @@ public class AppointmentController {
     public ResponseEntity<List<Appointment>> getUserHistory(@RequestParam("username") String username) {
         return new ResponseEntity<>(appointmentService.getUserHistory(username), HttpStatus.OK);
     }
+    @GetMapping("/history/{id}")
+    @PreAuthorize("hasRole('ADMIN')")
+    public ResponseEntity<List<Appointment>> getUserHistory(@PathVariable Long id) {
+        return new ResponseEntity<>(appointmentService.getUserHistoryForPatient(id), HttpStatus.OK);
+    }
 }

@@ -1,8 +1,8 @@
 package com.strotska.prychodnia.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.*;
-import java.util.HashSet;
-import java.util.Set;
 
 @Entity
 public class UserDetails extends BaseEntity {
@@ -18,6 +18,7 @@ public class UserDetails extends BaseEntity {
     private String pesel;
     @OneToOne
     @JoinColumn(name = "identity_id", referencedColumnName = "id")
+    @JsonIgnore
     private Identity identity;
 
     public UserDetails() {

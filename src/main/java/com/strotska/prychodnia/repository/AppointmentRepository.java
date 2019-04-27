@@ -17,4 +17,7 @@ public interface AppointmentRepository extends CrudRepository<Appointment, Long>
 
     @Query("SELECT appointment FROM Appointment appointment WHERE EXISTS(SELECT user FROM appointment.patient user WHERE user.pesel = :pesel)")
     List<Appointment> findAllForUser(@Param("pesel") String pesel);
+
+    @Query("SELECT appointment FROM Appointment appointment WHERE EXISTS(SELECT user FROM appointment.patient user WHERE user.id = :id)")
+    List<Appointment> findAllForUserId(@Param("id")Long id);
 }

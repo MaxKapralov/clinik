@@ -42,4 +42,7 @@ public class AppointmentService {
     public List<Appointment> getUserHistory(String username){
         return this.appointmentRepository.findAllForUser(username);
     }
+    public List<Appointment> getUserHistoryForPatient(Long id) {
+        return this.appointmentRepository.findAllForUserId(id);
+    }
 }

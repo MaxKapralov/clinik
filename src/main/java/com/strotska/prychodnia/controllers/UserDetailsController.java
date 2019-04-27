@@ -22,10 +22,15 @@ public class UserDetailsController {
     }
 
     @GetMapping
-    @PreAuthorize("#username == authentication.principal")
-    public ResponseEntity<List<UserDetails>> getUserByUsername(@RequestParam("username") String username) {
-        return this.userService.getUserByUsername(username).map(u -> new ResponseEntity<>(Utils.listOf(u), HttpStatus.OK)).orElse(new ResponseEntity<>(HttpStatus.BAD_REQUEST));
+    @PreAuthorize("#username == authentication.principal || hasRole('ADMIN')")
+    public ResponseEntity<List<UserDetails>> getUserByUsername(@RequestParam(name = "username", required = false) String username) {
+        if (username != null) {
+            return this.userService.getUserByUsername(username).map(u -> new ResponseEntity<>(Utils.listOf(u), HttpStatus.OK)).orElse(new ResponseEntity<>(HttpStatus.BAD_REQUEST));
+        } else {
+            return new ResponseEntity<>(this.userService.getAllUsers(), HttpStatus.OK);
+        }
     }
+
     @PutMapping("/{id}")
     @PreAuthorize("#user.pesel == authentication.principal")
     public ResponseEntity<Void> updateDetails(@RequestBody UserDetailsDTO user) {
