@@ -5,6 +5,7 @@ import com.strotska.prychodnia.repository.AppointmentRepository;
 import org.springframework.stereotype.Service;
 
 import java.time.Instant;
+import java.time.temporal.ChronoUnit;
 import java.util.List;
 import java.util.Optional;
 
@@ -39,10 +40,19 @@ public class AppointmentService {
                 })
         ).orElse(Optional.empty());
     }
-    public List<Appointment> getUserHistory(String username){
+
+    public List<Appointment> getUserHistory(String username) {
         return this.appointmentRepository.findAllForUser(username);
     }
+
     public List<Appointment> getUserHistoryForPatient(Long id) {
         return this.appointmentRepository.findAllForUserId(id);
+    }
+
+    public List<Appointment> getCalendar(Long serviceId, Instant date) {
+        if (date != null) {
+            return this.appointmentRepository.findCalendarForServiceAndDate(serviceId, date, date.plus(1, ChronoUnit.DAYS));
+        }
+        return this.appointmentRepository.findCalendarForServiceAndDate(serviceId, null, null);
     }
 }

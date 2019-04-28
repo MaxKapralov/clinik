@@ -54,7 +54,7 @@ public class RepositoryInit implements CommandLineRunner {
         Service s3 = serviceRepository.save(new Service("Service 3"));
         Doctor d1 = doctorRepository.save(new Doctor("First", "Doctor"));
         Doctor d2 = doctorRepository.save(new Doctor("Second", "Doctor"));
-        Appointment a1 = new Appointment(null, d1, s1, Instant.now(), false);
+        Appointment a1 = new Appointment(userDetailsRepository.findByPesel("test").get(), d1, s1, Instant.now(), false);
         Appointment a2 = new Appointment(null, d2, s3, Instant.now().plus(1, ChronoUnit.HOURS), true);
         Appointment a3 = new Appointment(userDetailsRepository.findByPesel("test").get(), d1, s2, Instant.now().plus(1, ChronoUnit.DAYS), false);
         Appointment a4 = new Appointment(null, d2, s1, Instant.now().plus(2, ChronoUnit.HOURS).plus(1, ChronoUnit.DAYS), true);

@@ -33,14 +33,26 @@ public class AppointmentController {
     public ResponseEntity reserveAppointment(@PathVariable Long id, @RequestBody String username) {
         return appointmentService.reserveAppointment(id, username).map(a -> new ResponseEntity(HttpStatus.OK)).orElse(new ResponseEntity<>(HttpStatus.BAD_REQUEST));
     }
+
     @GetMapping("/history")
     @PreAuthorize("#username == authentication.principal")
     public ResponseEntity<List<Appointment>> getUserHistory(@RequestParam("username") String username) {
         return new ResponseEntity<>(appointmentService.getUserHistory(username), HttpStatus.OK);
     }
+
     @GetMapping("/history/{id}")
     @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<List<Appointment>> getUserHistory(@PathVariable Long id) {
         return new ResponseEntity<>(appointmentService.getUserHistoryForPatient(id), HttpStatus.OK);
+    }
+
+    @GetMapping("/calendar")
+    @PreAuthorize("hasRole('ADMIN')")
+    public ResponseEntity<List<Appointment>> getCalendar(@RequestParam(name = "serviceId", required = false) Long serviceId,
+                                                         @RequestParam(name = "date", required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) OffsetDateTime date) {
+        if (date != null) {
+            return new ResponseEntity<>(appointmentService.getCalendar(serviceId, date.toInstant()), HttpStatus.OK);
+        }
+        return new ResponseEntity<>(appointmentService.getCalendar(serviceId, null), HttpStatus.OK);
     }
 }
