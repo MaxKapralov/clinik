@@ -22,4 +22,12 @@ public class Doctor extends BaseEntity {
     public String getSurname() {
         return surname;
     }
+
+    @Override
+    public String toString() {
+        return "Doctor{" +
+                "name='" + name + '\'' +
+                ", surname='" + surname + '\'' +
+                '}';
+    }
 }

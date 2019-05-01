@@ -24,4 +24,7 @@ public interface AppointmentRepository extends CrudRepository<Appointment, Long>
     @Query("SELECT appointment FROM Appointment appointment WHERE EXISTS(SELECT service FROM appointment.service service WHERE (:serviceId IS NULL OR service.id = :serviceId))" +
             " AND (:dateFrom IS NULL OR (appointment.term >= :dateFrom and appointment.term <= :dateTo)) AND appointment.free = false ORDER BY appointment.term DESC")
     List<Appointment> findCalendarForServiceAndDate(@Param("serviceId") Long serviceId, @Param("dateFrom") Instant dateFrom, @Param("dateTo") Instant dateTo);
+
+    List<Appointment> findAllByTermBetweenAndDoctor_Id(Instant start, Instant end, Long id);
+
 }

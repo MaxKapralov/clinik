@@ -62,4 +62,15 @@ public class Appointment extends BaseEntity {
     public void setFree(boolean free) {
         this.free = free;
     }
+
+    @Override
+    public String toString() {
+        return "Appointment{" +
+                "patient=" + patient +
+                ", doctor=" + doctor +
+                ", service=" + service +
+                ", term=" + term +
+                ", free=" + free +
+                '}';
+    }
 }

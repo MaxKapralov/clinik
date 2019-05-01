@@ -9,6 +9,7 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.time.OffsetDateTime;
+import java.time.temporal.ChronoUnit;
 import java.util.List;
 
 @RestController
@@ -54,5 +55,18 @@ public class AppointmentController {
             return new ResponseEntity<>(appointmentService.getCalendar(serviceId, date.toInstant()), HttpStatus.OK);
         }
         return new ResponseEntity<>(appointmentService.getCalendar(serviceId, null), HttpStatus.OK);
+    }
+
+    @GetMapping("/new-week")
+    @PreAuthorize("hasRole('ADMIN')")
+    public ResponseEntity<List<Appointment>> getForNewWeek(@RequestParam("date") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) OffsetDateTime date,
+                                                           @RequestParam("id") Long id) {
+        return new ResponseEntity<>(appointmentService.getAppointmentsForDays(date.toInstant(), date.plus(5, ChronoUnit.DAYS).toInstant(), id), HttpStatus.OK);
+    }
+    @PostMapping()
+    @PreAuthorize("hasRole('ADMIN')")
+    public ResponseEntity<Appointment> addAppointment(@RequestBody Appointment appointment) {
+        System.out.println(appointment);
+        return this.appointmentService.saveAppointment(appointment).map(a -> new ResponseEntity<>(a, HttpStatus.OK)).orElse(new ResponseEntity<>(HttpStatus.BAD_REQUEST));
     }
 }

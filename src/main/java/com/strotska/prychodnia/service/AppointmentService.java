@@ -6,6 +6,8 @@ import org.springframework.stereotype.Service;
 
 import java.time.Instant;
 import java.time.temporal.ChronoUnit;
+import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
 import java.util.Optional;
 
@@ -54,5 +56,20 @@ public class AppointmentService {
             return this.appointmentRepository.findCalendarForServiceAndDate(serviceId, date, date.plus(1, ChronoUnit.DAYS));
         }
         return this.appointmentRepository.findCalendarForServiceAndDate(serviceId, null, null);
+    }
+
+    public List<Appointment> getAppointmentsForDays(Instant startDate, Instant endDate, Long id) {
+        List<Appointment> reserved = appointmentRepository.findAllByTermBetweenAndDoctor_Id(startDate, endDate, id);
+        List<Appointment> result = new ArrayList<>();
+        for(; startDate.isBefore(endDate); startDate = startDate.plus(1, ChronoUnit.DAYS)) {
+            for (int i = 0; i < 16; i++) {
+                Instant term = startDate.plus(30 * i, ChronoUnit.MINUTES);
+                if (reserved.stream().noneMatch(appointment -> (appointment.getTerm().isAfter(term) && appointment.getTerm().isBefore(term.plus(30, ChronoUnit.MINUTES))) || appointment.getTerm().equals(term))) {
+                    result.add(new Appointment(null, null, null, term, true));
+                }
+            }
+        }
+        result.sort(Comparator.comparing(Appointment::getTerm));
+        return result;
     }
 }
