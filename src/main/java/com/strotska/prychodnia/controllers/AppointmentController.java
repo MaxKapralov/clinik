@@ -66,7 +66,6 @@ public class AppointmentController {
     @PostMapping()
     @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<Appointment> addAppointment(@RequestBody Appointment appointment) {
-        System.out.println(appointment);
         return this.appointmentService.saveAppointment(appointment).map(a -> new ResponseEntity<>(a, HttpStatus.OK)).orElse(new ResponseEntity<>(HttpStatus.BAD_REQUEST));
     }
 }
